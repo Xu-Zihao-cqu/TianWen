@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { categories } from '../../data/categories.js';
 
 export default function MobileMenu({ open, onClose }) {
-  // 打开时禁止 body 滚动
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -25,7 +25,6 @@ export default function MobileMenu({ open, onClose }) {
     <AnimatePresence>
       {open && (
         <>
-          {/* 遮罩 */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -34,7 +33,6 @@ export default function MobileMenu({ open, onClose }) {
             onClick={onClose}
           />
 
-          {/* 菜单面板 */}
           <motion.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
@@ -63,18 +61,18 @@ export default function MobileMenu({ open, onClose }) {
 
               <div className="my-2 border-t border-slate-200 dark:border-slate-700" />
 
-              <NavLink to="/works/hardware" onClick={onClose} className={linkClasses}>
-                硬件项目
-              </NavLink>
-              <NavLink to="/works/software" onClick={onClose} className={linkClasses}>
-                软件项目
-              </NavLink>
-              <NavLink to="/works/resources" onClick={onClose} className={linkClasses}>
-                资源分享
-              </NavLink>
-              <NavLink to="/works/assignments" onClick={onClose} className={linkClasses}>
-                在校作业
-              </NavLink>
+              {categories
+                .sort((a, b) => a.sortOrder - b.sortOrder)
+                .map((c) => (
+                  <NavLink
+                    key={c.id}
+                    to={`/works/${c.id}`}
+                    onClick={onClose}
+                    className={linkClasses}
+                  >
+                    {c.name.zh}
+                  </NavLink>
+                ))}
             </nav>
           </motion.div>
         </>

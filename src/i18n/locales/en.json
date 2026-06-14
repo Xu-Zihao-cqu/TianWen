@@ -39,6 +39,14 @@
     "noWorks": "No works yet. Stay tuned!",
     "workCount": "{count} works"
   },
+  "detail": {
+    "files": "Files",
+    "externalLinks": "External Links",
+    "previewNotSupported": "This file type does not support online preview",
+    "clickToDownload": "Click to download",
+    "codeLoadError": "Code loading failed, please check the file",
+    "pageError": "An unexpected error occurred. Please refresh the page."
+  },
   "notFound": {
     "title": "Page Not Found",
     "description": "The page does not exist or has been moved.",

@@ -1,40 +1,57 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { HelmetProvider } from 'react-helmet-async';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n/index.js';
 import { ThemeProvider } from './contexts/ThemeContext.jsx';
+import ErrorBoundary from './components/ui/ErrorBoundary.jsx';
 import Layout from './components/layout/Layout.jsx';
 import ScrollToTop from './components/layout/ScrollToTop.jsx';
-import HomePage from './pages/HomePage.jsx';
-import WorksPage from './pages/WorksPage.jsx';
-import WorksListPage from './pages/WorksListPage.jsx';
-import WorkDetailPage from './pages/WorkDetailPage.jsx';
-import NotFoundPage from './pages/NotFoundPage.jsx';
+import LoadingScreen from './components/ui/LoadingScreen.jsx';
+
+// 路由级代码分割
+const HomePage = lazy(() => import('./pages/HomePage.jsx'));
+const WorksPage = lazy(() => import('./pages/WorksPage.jsx'));
+const WorksListPage = lazy(() => import('./pages/WorksListPage.jsx'));
+const WorkDetailPage = lazy(() => import('./pages/WorkDetailPage.jsx'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'));
+
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="works" element={<WorksPage />} />
+          <Route path="works/:category" element={<WorksListPage />} />
+          <Route path="works/:category/:workId" element={<WorkDetailPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 function App() {
   return (
-    <I18nextProvider i18n={i18n}>
-      <ThemeProvider>
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route path="works" element={<WorksPage />} />
-              <Route path="works/:category" element={<WorksListPage />} />
-              <Route path="works/:category/:workId" element={<WorkDetailPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </I18nextProvider>
+    <HelmetProvider>
+      <ErrorBoundary>
+        <I18nextProvider i18n={i18n}>
+          <ThemeProvider>
+            <BrowserRouter>
+              <ScrollToTop />
+              <Suspense fallback={<LoadingScreen />}>
+                <AnimatedRoutes />
+              </Suspense>
+            </BrowserRouter>
+          </ThemeProvider>
+        </I18nextProvider>
+      </ErrorBoundary>
+    </HelmetProvider>
   );
 }
 
 export default App;
-
-/* ==========================================
-   后续步骤预留 Provider
-   Step 11: + AnimatePresence (路由过渡动效)
-   Step 12: + React.lazy + Suspense + HelmetProvider + ErrorBoundary
-   ========================================== */

@@ -45,7 +45,7 @@ export default function Navbar() {
                 to={`/works/${c.id}`}
                 className={linkClasses}
               >
-                {c.name.zh}
+                {c.name.zh} / {c.name.en}
               </NavLink>
             ))}
           </div>

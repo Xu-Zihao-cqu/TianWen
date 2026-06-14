@@ -1,12 +1,27 @@
+import { Helmet } from 'react-helmet-async';
+import { useI18n } from '../hooks/useI18n.js';
+import PageHeader from '../components/ui/PageHeader.jsx';
+import CategoryGrid from '../components/features/CategoryGrid.jsx';
+import { categories } from '../data/categories.js';
+
 export default function WorksPage() {
+  const { locale, t } = useI18n();
+
   return (
-    <div className="flex items-center justify-center min-h-[80vh]">
-      <div className="text-center">
-        <h1 className="text-4xl font-heading font-bold gradient-text mb-4">
-          作品集
-        </h1>
-        <p className="text-slate-500 dark:text-slate-400">四大板块入口：硬件 / 软件 / 资源 / 作业</p>
-      </div>
+    <div className="max-w-6xl mx-auto px-4">
+      <Helmet>
+        <title>{t('nav.works')} | 天问 TianWen</title>
+        <meta name="description" content={locale === 'zh'
+          ? '硬件、软件、资源分享与在校作业 — 四大板块作品集。'
+          : 'Hardware, software, resources and assignments — four categories of works.'} />
+      </Helmet>
+      <PageHeader
+        title={locale === 'zh' ? '作品集' : 'Portfolio'}
+        subtitle={locale === 'zh'
+          ? '四大板块，涵盖硬件、软件、资源与作业'
+          : 'Four categories covering hardware, software, resources, and assignments'}
+      />
+      <CategoryGrid categories={categories} />
     </div>
   );
 }
