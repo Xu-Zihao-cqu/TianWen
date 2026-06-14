@@ -18,9 +18,9 @@ export const profile = {
 
   contact: {
     email: 'your-email@example.com',
-    github: 'https://github.com/yourusername',
+    github: 'https://github.com/Xu-Zihao-cqu',
     social: [
-      { platform: 'github', url: 'https://github.com/yourusername', icon: 'github' },
+      { platform: 'github', url: 'https://github.com/Xu-Zihao-cqu', icon: 'github' },
       { platform: 'email', url: 'mailto:your-email@example.com', icon: 'mail' },
     ],
   },
