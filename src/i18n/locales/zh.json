@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "home": "首页",
+    "works": "作品集"
+  },
+  "footer": {
+    "copyright": "© {year} 天问 TianWen. All rights reserved.",
+    "backToTop": "回到顶部"
+  },
+  "common": {
+    "download": "下载",
+    "preview": "预览",
+    "copy": "复制",
+    "copied": "已复制",
+    "back": "返回",
+    "close": "关闭",
+    "loading": "加载中...",
+    "empty": "暂无内容",
+    "error": "出错了",
+    "retry": "重试"
+  },
+  "theme": {
+    "light": "亮色模式",
+    "dark": "暗色模式"
+  },
+  "language": {
+    "switch": "切换语言",
+    "zh": "中文",
+    "en": "English"
+  },
+  "home": {
+    "scrollDown": "向下滚动",
+    "featuredWorks": "精选作品",
+    "viewAll": "查看全部",
+    "contactMe": "联系我"
+  },
+  "works": {
+    "filterByTag": "按标签筛选",
+    "noWorks": "暂无作品，敬请期待",
+    "workCount": "{count} 个作品"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "description": "您访问的页面不存在或已被移动。",
+    "goHome": "返回首页"
+  }
+}

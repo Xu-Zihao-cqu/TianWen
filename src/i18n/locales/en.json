@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "home": "Home",
+    "works": "Works"
+  },
+  "footer": {
+    "copyright": "© {year} TianWen. All rights reserved.",
+    "backToTop": "Back to Top"
+  },
+  "common": {
+    "download": "Download",
+    "preview": "Preview",
+    "copy": "Copy",
+    "copied": "Copied",
+    "back": "Back",
+    "close": "Close",
+    "loading": "Loading...",
+    "empty": "No content",
+    "error": "Something went wrong",
+    "retry": "Retry"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  },
+  "language": {
+    "switch": "Switch Language",
+    "zh": "中文",
+    "en": "English"
+  },
+  "home": {
+    "scrollDown": "Scroll Down",
+    "featuredWorks": "Featured Works",
+    "viewAll": "View All",
+    "contactMe": "Contact Me"
+  },
+  "works": {
+    "filterByTag": "Filter by Tag",
+    "noWorks": "No works yet. Stay tuned!",
+    "workCount": "{count} works"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page does not exist or has been moved.",
+    "goHome": "Go Home"
+  }
+}
