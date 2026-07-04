@@ -22,7 +22,7 @@
     "react-markdown": "^9.0.0",
     "react-pdf": "^9.0.0",
     "react-router-dom": "^6.24.0",
-    "pdfjs-dist": "^4.0.0"
+    "pdfjs-dist": "4.8.69"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.0",
