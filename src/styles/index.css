@@ -34,6 +34,9 @@
   body {
     @apply bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-300;
     font-family: 'Inter', 'Noto Sans SC', system-ui, -apple-system, 'Microsoft YaHei', sans-serif;
+    background-image:
+      linear-gradient(180deg, rgba(248, 250, 252, 0.82), rgba(255, 255, 255, 0) 420px),
+      radial-gradient(circle at 50% -20%, rgba(102, 126, 234, 0.12), transparent 36rem);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -42,6 +45,38 @@
 
   code, pre {
     font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+  }
+
+  .dark body {
+    background-image:
+      linear-gradient(180deg, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0) 420px),
+      radial-gradient(circle at 50% -20%, rgba(129, 140, 248, 0.16), transparent 36rem);
+  }
+
+  ::selection {
+    background: rgba(102, 126, 234, 0.25);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.32);
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.52);
+    border: 3px solid transparent;
+    background-clip: content-box;
   }
 }
 

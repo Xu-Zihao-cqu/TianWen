@@ -1,63 +1,75 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu } from 'lucide-react';
+import { Menu, Sparkles } from 'lucide-react';
 import ThemeToggle from './ThemeToggle.jsx';
 import LanguageSwitch from './LanguageSwitch.jsx';
 import MobileMenu from './MobileMenu.jsx';
 import { categories } from '../../data/categories.js';
+import { useI18n } from '../../hooks/useI18n.js';
+import { getIcon } from '../../utils/icons.js';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { locale } = useI18n();
 
   const navLinks = [
-    { to: '/', label: '首页', end: true },
-    { to: '/works', label: '作品集', end: false },
+    { to: '/', label: locale === 'zh' ? '首页' : 'Home', end: true },
+    { to: '/works', label: locale === 'zh' ? '作品集' : 'Works', end: false },
   ];
 
   const linkClasses = ({ isActive }) =>
-    `text-sm font-medium transition-colors ${
+    `rounded-full px-3 py-2 text-sm font-semibold transition-all ${
       isActive
-        ? 'text-primary dark:text-primary-dark'
-        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
+        ? 'bg-slate-950 text-white shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950'
+        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white'
     }`;
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700">
-        <nav className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="text-xl font-heading font-bold gradient-text">
-            天问 TianWen
+      <header className="fixed left-0 right-0 top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/70">
+        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+          <Link to="/" className="group inline-flex items-center gap-2">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-950 text-white shadow-lg shadow-slate-900/15 transition-transform group-hover:-rotate-3 dark:bg-white dark:text-slate-950">
+              <Sparkles size={17} />
+            </span>
+            <span className="font-heading text-lg font-black text-slate-950 dark:text-white">
+              天问
+            </span>
+            <span className="hidden text-xs font-semibold uppercase text-slate-400 dark:text-slate-500 sm:inline">
+              TianWen
+            </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-white/75 p-1 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5 lg:flex">
             {navLinks.map((link) => (
               <NavLink key={link.to} to={link.to} end={link.end} className={linkClasses}>
                 {link.label}
               </NavLink>
             ))}
+          </div>
 
-            {/* 板块下拉（简化：直接列出） */}
+          <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-white/75 p-1 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5 md:flex">
             {categories.map((c) => (
-              <NavLink
-                key={c.id}
-                to={`/works/${c.id}`}
-                className={linkClasses}
-              >
-                {c.name.zh} / {c.name.en}
+              <NavLink key={c.id} to={`/works/${c.id}`} className={linkClasses}>
+                {({ isActive }) => {
+                  const Icon = getIcon(c.icon);
+                  return (
+                    <span className="inline-flex items-center gap-1.5">
+                      {Icon && <Icon size={14} className={isActive ? 'text-current' : 'text-slate-400'} />}
+                      {c.name[locale]}
+                    </span>
+                  );
+                }}
               </NavLink>
             ))}
           </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white/75 p-1 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5">
             <ThemeToggle />
             <LanguageSwitch />
-            {/* Mobile hamburger */}
             <button
               onClick={() => setMenuOpen(true)}
-              className="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="rounded-full p-2 transition-colors hover:bg-slate-100 dark:hover:bg-white/10 md:hidden"
               aria-label="打开菜单"
             >
               <Menu size={20} />

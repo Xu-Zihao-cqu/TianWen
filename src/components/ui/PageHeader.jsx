@@ -2,7 +2,8 @@ import { cn } from '../../utils/helpers.js';
 
 export default function PageHeader({ title, subtitle, breadcrumbs, className }) {
   return (
-    <div className={cn('py-12 md:py-16', className)}>
+    <div className={cn('relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900 md:p-8', className)}>
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-300 via-emerald-300 to-amber-300" />
       {breadcrumbs && (
         <nav className="flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400 mb-4">
           {breadcrumbs.map((crumb, i) => (
@@ -21,11 +22,11 @@ export default function PageHeader({ title, subtitle, breadcrumbs, className }) 
           ))}
         </nav>
       )}
-      <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-slate-100">
+      <h1 className="font-heading text-3xl font-black text-slate-950 dark:text-white md:text-5xl">
         {title}
       </h1>
       {subtitle && (
-        <p className="mt-3 text-slate-500 dark:text-slate-400 max-w-2xl">
+        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-500 dark:text-slate-400">
           {subtitle}
         </p>
       )}

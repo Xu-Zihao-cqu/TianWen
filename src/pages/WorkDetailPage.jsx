@@ -67,7 +67,7 @@ function WorkHeader({ work }) {
               ))}
             </div>
             <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
-              <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+              <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur">
                 <Layers3 size={14} />
                 {locale === 'zh' ? '项目预览' : 'Project Preview'}
               </p>
@@ -152,7 +152,7 @@ function WorkHeader({ work }) {
                   style={gradientStyle}
                 >
                   <span className="flex min-w-0 items-center gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/18 text-white backdrop-blur">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur">
                       <ExternalLink size={17} />
                     </span>
                     <span className="truncate">

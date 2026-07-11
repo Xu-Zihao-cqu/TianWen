@@ -8,7 +8,7 @@ export default function WorksPage() {
   const { locale, t } = useI18n();
 
   return (
-    <div className="max-w-6xl mx-auto px-4">
+    <div className="mx-auto max-w-6xl px-4 py-10">
       <Helmet>
         <title>{t('nav.works')} | 天问 TianWen</title>
         <meta name="description" content={locale === 'zh'
@@ -16,6 +16,7 @@ export default function WorksPage() {
           : 'Hardware, software, resources and assignments — four categories of works.'} />
       </Helmet>
       <PageHeader
+        className="mb-8"
         title={locale === 'zh' ? '作品集' : 'Portfolio'}
         subtitle={locale === 'zh'
           ? '四大板块，涵盖硬件、软件、资源与作业'

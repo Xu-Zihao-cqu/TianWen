@@ -56,12 +56,12 @@ export default function WorksListPage() {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
+    <div className="mx-auto max-w-6xl px-4 py-10">
       <Helmet>
         <title>{seoTitle}</title>
         {subtitle && <meta name="description" content={subtitle} />}
       </Helmet>
-      <PageHeader title={title} subtitle={subtitle} />
+      <PageHeader title={title} subtitle={subtitle} className="mb-8" />
       <TagFilter
         availableTags={allTags}
         selectedTags={selectedTags}

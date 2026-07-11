@@ -5,6 +5,8 @@
 **技术栈：** React 18 + Vite 5 + Tailwind CSS 3 + Framer Motion 11  
 **仓库：** [github.com/Xu-Zihao-cqu/TianWen](https://github.com/Xu-Zihao-cqu/TianWen)
 
+**日常维护：** 见 [usersheet.md](usersheet.md)
+
 ---
 
 ## 本地启动
@@ -27,17 +29,18 @@ npm run preview    # 预览生产构建
 | 第三批 | 7-10 | 全部页面实现 | ✅ |
 | 第四批 | 11-13 | 动效 + SEO/性能 + 部署 | ✅ |
 
-**全部 13 步完成 — v1 上线就绪。**
+**全部 13 步完成，当前已进入内容维护与视觉精修阶段。**
 
 ### 已实现功能
 
-- 首页 Hero 渐变流动背景 + 打字机轮播 + 技能栈（分类 Tab + 滚动入场进度条）+ 精选作品横滑 + 联系方式
-- 作品集主页 4 张渐变动画入口卡片，悬停放大
+- 首页动态电路网格 Hero + 创作工作台 + 技能控制台 + 精选作品舞台 + 联系 CTA
+- 玻璃质感导航栏、移动端滑入菜单、暗色科技感 Footer
+- 作品集主页 4 张渐变入口卡片，按 `categories.js` 自动生成
 - 作品列表页卡片网格 + 标签多选筛选（URL 同步）+ 空状态
-- 作品详情页 Markdown + PDF 分页预览 + 代码语法高亮 + 复制 + 下载 + 外部链接
+- 作品详情页封面预览 + 项目摘要 + Markdown + 系统架构彩色框图 + 附件下载/预览 + 外部链接
 - 暗色/亮色双主题（localStorage 持久化，首次跟随系统）
 - 中/英双语切换（react-i18next，localStorage 持久化）
-- 移动端汉堡菜单（Framer Motion 滑入）
+- 移动端汉堡菜单（Framer Motion 滑入 + 背景锁定）
 - 滚动入场动画（IntersectionObserver + 尊重减动效偏好）
 - 路由切换过渡（AnimatePresence fade+up）
 - 路由级代码分割（首屏 JS ~118KB gzip）
@@ -52,11 +55,11 @@ npm run preview    # 预览生产构建
 
 ```
 / (首页)
-├── Hero       渐变背景 + 头像 + 打字机短语 + 下滚箭头
-├── 关于我     两栏布局（文字 + 装饰）
-├── 技能栈     分类 Tab + 进度条（滚动入场动画）
-├── 精选作品   横向滚动，featured:true 的作品
-└── 联系方式   邮箱 + GitHub + 社交卡片
+├── Hero       动态电路网格 + 头像光环 + 打字机 + 统计数据 + CTA
+├── 创作工作台  关于我 + 创作原则 + 四大板块入口
+├── 技能控制台  分类 Tab + 技能卡片 + 动态进度条
+├── 精选作品    横向滚动，featured:true 的作品
+└── 联系 CTA    邮箱 + GitHub + 社交入口
 
 /works (作品集主页)
 ├── 硬件项目入口 → /works/hardware
@@ -70,11 +73,11 @@ npm run preview    # 预览生产构建
 └── 空状态       暂无作品提示
 
 /works/:category/:workId (作品详情页)
-├── 作品标题 + 彩色标签 + 返回链接
-├── Markdown 完整描述（代码/图片/链接自定义渲染）
-├── PDF 在线预览（分页导航）
-├── 代码语法高亮（Prism.js + 复制按钮）
-├── 文件下载
+├── 作品封面预览 + 项目摘要 + 日期/附件/链接信息
+├── 技术标签 + GitHub 主行动按钮
+├── Markdown 完整描述（表格/代码/图片/链接自定义渲染）
+├── 文本流程自动渲染为彩色系统框图
+├── PDF/代码在线预览 + 文件下载
 └── 外部链接（新窗口）
 ```
 
@@ -118,7 +121,7 @@ tianwen/
 
 ## 如何上传作品
 
-只编辑数据文件，无需改动任何组件代码。
+常规情况下只编辑数据文件和 `public/` 静态文件，无需改动任何组件代码。更详细的每日/每次上传流程见 [usersheet.md](usersheet.md)。
 
 ### 1. 编辑数据文件
 
@@ -138,7 +141,7 @@ tianwen/
   files: [
     {
       name: 'schematic.pdf',
-      type: 'pdf',                     // 'pdf' | 'code' | 'binary'
+      type: 'pdf',                     // 'pdf' | 'code' | 'zip' | 'binary' | 'link'
       size: '1.2 MB',
       url: '/files/hardware/hw-my-project/schematic.pdf',
       previewable: true,               // pdf 和单个代码文件可预览
@@ -179,7 +182,18 @@ public/
 | `description.short` | ❌ | 卡片用短描述 |
 | `description.full` | ❌ | 详情页 Markdown 描述 |
 | `tags` | ❌ | 标签数组，用于筛选 |
-| `files` | ❌ | type: `pdf` / `code` / `binary` |
+| `files` | ❌ | type: `pdf` / `code` / `zip` / `binary` / `link` |
 | `externalLinks` | ❌ | icon 需在 `utils/icons.js` 注册 |
 | `featured` | ❌ | 首页精选（最多 4 个） |
 | `createdAt` | ❌ | 日期，排序用 |
+
+---
+
+## 日常维护建议
+
+1. 每次新增内容前，先确认属于四大板块中的哪一类。
+2. 先准备封面图和附件，再编辑对应 `src/data/works/*.js`。
+3. 新作品必须保证 `id` 全局唯一，路径和文件名大小写一致。
+4. 本地运行 `npm run dev` 检查首页卡片、列表页、详情页和附件链接。
+5. 发布前运行 `npm run build` 和 `git diff --check`。
+6. 当天做过的内容记录到 `dev-logs/YYYY-MM-DD.md`。
