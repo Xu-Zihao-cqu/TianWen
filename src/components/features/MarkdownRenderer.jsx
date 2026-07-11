@@ -1,5 +1,44 @@
 import ReactMarkdown from 'react-markdown';
+import {
+  Activity,
+  ArrowDown,
+  Camera,
+  Cpu,
+  Database,
+  Monitor,
+  RadioTower,
+  ScanLine,
+  SlidersHorizontal,
+} from 'lucide-react';
 import { cn } from '../../utils/helpers.js';
+
+const flowIcons = [
+  Camera,
+  RadioTower,
+  SlidersHorizontal,
+  Activity,
+  ScanLine,
+  Cpu,
+  Activity,
+  SlidersHorizontal,
+  Cpu,
+  Database,
+  Monitor,
+];
+
+const flowStyles = [
+  'from-orange-400 to-red-500',
+  'from-sky-400 to-blue-500',
+  'from-indigo-400 to-violet-500',
+  'from-emerald-400 to-teal-500',
+  'from-cyan-400 to-blue-500',
+  'from-fuchsia-400 to-pink-500',
+  'from-amber-400 to-orange-500',
+  'from-lime-400 to-emerald-500',
+  'from-purple-400 to-indigo-500',
+  'from-slate-500 to-slate-700',
+  'from-rose-400 to-red-500',
+];
 
 function isTableSeparator(line) {
   const cells = line
@@ -25,6 +64,37 @@ function parseTableRow(line) {
     .map((cell) => cell.trim());
 }
 
+function getFenceStart(line) {
+  const match = line.trim().match(/^(`{3,}|~{3,})([a-zA-Z0-9_-]*)/);
+  if (!match) return null;
+
+  return {
+    char: match[1][0],
+    length: match[1].length,
+    lang: match[2]?.toLowerCase() || '',
+  };
+}
+
+function isFenceEnd(line, fence) {
+  return line.trim().startsWith(fence.char.repeat(fence.length));
+}
+
+function parseFlowSteps(text) {
+  return text
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line && /[A-Za-z0-9\u4e00-\u9fa5]/.test(line))
+    .filter((line) => !/^[↓→←↑\-\s|]+$/.test(line));
+}
+
+function isFlowBlock(fence, text) {
+  const steps = parseFlowSteps(text);
+  const isPlainText = !fence.lang || fence.lang === 'text' || fence.lang === 'txt';
+  const hasFlowMarks = /[↓→]/.test(text);
+
+  return isPlainText && hasFlowMarks && steps.length >= 4;
+}
+
 function splitMarkdownBlocks(content = '') {
   const lines = content.split('\n');
   const blocks = [];
@@ -37,7 +107,32 @@ function splitMarkdownBlocks(content = '') {
   };
 
   for (let i = 0; i < lines.length; i += 1) {
-    if (isTableStart(lines, i)) {
+    const fence = getFenceStart(lines[i]);
+
+    if (fence) {
+      const fenceLines = [lines[i]];
+      const bodyLines = [];
+      i += 1;
+
+      while (i < lines.length) {
+        if (isFenceEnd(lines[i], fence)) {
+          fenceLines.push(lines[i]);
+          break;
+        }
+
+        bodyLines.push(lines[i]);
+        fenceLines.push(lines[i]);
+        i += 1;
+      }
+
+      const body = bodyLines.join('\n');
+      if (isFlowBlock(fence, body)) {
+        flushMarkdown();
+        blocks.push({ type: 'flow', steps: parseFlowSteps(body) });
+      } else {
+        markdownLines.push(...fenceLines);
+      }
+    } else if (isTableStart(lines, i)) {
       flushMarkdown();
       const tableLines = [lines[i], lines[i + 1]];
       i += 2;
@@ -56,6 +151,57 @@ function splitMarkdownBlocks(content = '') {
 
   flushMarkdown();
   return blocks;
+}
+
+function SystemFlowDiagram({ steps }) {
+  return (
+    <div className="my-8 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
+      <div className="flex flex-col gap-2 border-b border-slate-200 bg-white px-5 py-4 dark:border-slate-700 dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">
+          System Architecture
+        </p>
+        <p className="text-xs font-medium text-slate-400 dark:text-slate-500">
+          系统框图请看附件
+        </p>
+      </div>
+
+      <div className="p-4 md:p-6">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {steps.map((step, index) => {
+            const Icon = flowIcons[index % flowIcons.length];
+            const color = flowStyles[index % flowStyles.length];
+
+            return (
+              <div key={`${step}-${index}`} className="flex flex-col items-center">
+                <div className="group relative flex min-h-[112px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800">
+                  <div className={cn('absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b', color)} />
+                  <div className="flex w-full items-center gap-4 pl-2">
+                    <div className={cn('flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-md', color)}>
+                      <Icon size={22} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                        Stage {String(index + 1).padStart(2, '0')}
+                      </p>
+                      <p className="mt-1 text-sm font-semibold leading-6 text-slate-800 dark:text-slate-100">
+                        {step}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {index < steps.length - 1 && (
+                  <div className="flex h-8 items-center justify-center text-slate-300 dark:text-slate-600 sm:hidden">
+                    <ArrowDown size={20} />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function MarkdownTable({ rows }) {
@@ -182,6 +328,8 @@ export default function MarkdownRenderer({ content, className }) {
       {blocks.map((block, index) => (
         block.type === 'table' ? (
           <MarkdownTable key={index} rows={block.rows} />
+        ) : block.type === 'flow' ? (
+          <SystemFlowDiagram key={index} steps={block.steps} />
         ) : (
           <ReactMarkdown key={index} components={markdownComponents}>
             {block.text}
