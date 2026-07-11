@@ -17,7 +17,7 @@ export default function PDFViewer({ url }) {
     if (!containerRef.current) return;
 
     const updateWidth = () => {
-      setPageWidth(Math.min(containerRef.current.clientWidth, 800));
+      setPageWidth(Math.min(Math.max(containerRef.current.clientWidth - 40, 280), 800));
     };
 
     updateWidth();
@@ -28,42 +28,53 @@ export default function PDFViewer({ url }) {
   }, []);
 
   return (
-    <div ref={containerRef}>
-      <Document
-        file={url}
-        onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-        loading={
-          <div className="flex items-center justify-center py-12">
-            <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+    <div ref={containerRef} className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 dark:border-slate-700 dark:bg-slate-900">
+      <div className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
+        <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">PDF Preview</span>
+        {numPages && (
+          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-500 dark:bg-slate-700 dark:text-slate-300">
+            {pageNumber} / {numPages}
+          </span>
+        )}
+      </div>
+
+      <div className="p-3 md:p-4">
+        <Document
+          file={url}
+          onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+          loading={
+            <div className="flex items-center justify-center py-16">
+              <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+            </div>
+          }
+          error={
+            <p className="text-red-500 text-center py-10">PDF 加载失败，请确认文件存在</p>
+          }
+        >
+          <div className="mx-auto overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700">
+            <Page pageNumber={pageNumber} width={pageWidth} />
           </div>
-        }
-        error={
-          <p className="text-red-500 text-center py-8">PDF 加载失败，请确认文件存在</p>
-        }
-      >
-        <div className="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white">
-          <Page pageNumber={pageNumber} width={pageWidth} />
-        </div>
-      </Document>
+        </Document>
+      </div>
 
       {numPages && numPages > 1 && (
-        <div className="flex items-center justify-center gap-4 mt-4">
+        <div className="flex items-center justify-center gap-4 border-t border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
           <button
             type="button"
             onClick={() => setPageNumber((p) => Math.max(1, p - 1))}
             disabled={pageNumber <= 1}
-            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30"
+            className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700 disabled:opacity-30"
           >
             <ChevronLeft size={20} />
           </button>
-          <span className="text-sm text-slate-600 dark:text-slate-400">
+          <span className="min-w-16 text-center text-sm text-slate-600 dark:text-slate-400">
             {pageNumber} / {numPages}
           </span>
           <button
             type="button"
             onClick={() => setPageNumber((p) => Math.min(numPages, p + 1))}
             disabled={pageNumber >= numPages}
-            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30"
+            className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700 disabled:opacity-30"
           >
             <ChevronRight size={20} />
           </button>

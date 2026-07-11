@@ -4,14 +4,14 @@
  */
 export const assignmentsWorks = [
   {
-    id: 'as-sample-1',
+    id: 'as-algorithm-lab-report',
     category: 'assignments',
-    title: { zh: '示例课程作业', en: 'Sample Assignment' },
+    title: { zh: '算法课程设计与实验报告', en: 'Algorithm Coursework Report' },
     coverImage: '/images/works/sample-assignment/cover.jpg',
     description: {
       short: {
-        zh: '一份课程设计或实验报告。',
-        en: 'A coursework design or lab report.',
+        zh: '围绕数据结构与算法设计的课程作业归档，包含实验报告、实现思路和关键知识点总结。',
+        en: 'A coursework archive around data structures and algorithm design, including the report, implementation ideas, and key concept notes.',
       },
       full: {
         zh: '## 作业简介\n\n课程设计或实验报告内容。\n\n## 涉及知识点\n\n- 数据结构\n- 算法设计',
