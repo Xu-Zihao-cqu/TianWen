@@ -6,12 +6,12 @@ import {
   ExternalLink,
   FolderOpen,
   Layers3,
+  Tags,
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useI18n } from '../hooks/useI18n.js';
 import { getWorkById } from '../data/works/index.js';
 import { categories } from '../data/categories.js';
-import Tag from '../components/ui/Tag.jsx';
 import Badge from '../components/ui/Badge.jsx';
 import LazyImage from '../components/ui/LazyImage.jsx';
 import MarkdownRenderer from '../components/features/MarkdownRenderer.jsx';
@@ -38,6 +38,9 @@ function WorkHeader({ work }) {
   };
   const softGradientStyle = {
     background: `linear-gradient(135deg, ${accent.from}1f, ${accent.to}14)`,
+  };
+  const tagAccentStyle = {
+    borderColor: `${accent.from}33`,
   };
 
   return (
@@ -116,23 +119,49 @@ function WorkHeader({ work }) {
               </div>
             </div>
 
-            <div className="mt-5 flex flex-wrap gap-1.5">
-              {work.tags?.map((tag) => (
-                <Tag key={tag} variant="colored">{tag}</Tag>
-              ))}
+            <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/80 p-4 dark:border-slate-700 dark:bg-slate-800/50">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">
+                  <Tags size={14} />
+                  {locale === 'zh' ? '技术标签' : 'Tags'}
+                </span>
+                <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
+                  {work.tags?.length || 0}
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {work.tags?.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm dark:bg-slate-900 dark:text-slate-300"
+                    style={tagAccentStyle}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {links[0] && (
-              <a
-                href={links[0].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                style={gradientStyle}
-              >
-                {primaryLinkLabel}
-                <ArrowUpRight size={16} />
-              </a>
+              <div className="mt-6 border-t border-slate-200 pt-5 dark:border-slate-700">
+                <a
+                  href={links[0].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between gap-4 rounded-2xl px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/20"
+                  style={gradientStyle}
+                >
+                  <span className="flex min-w-0 items-center gap-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/18 text-white backdrop-blur">
+                      <ExternalLink size={17} />
+                    </span>
+                    <span className="truncate">
+                      {primaryLinkLabel}
+                    </span>
+                  </span>
+                  <ArrowUpRight size={18} className="shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              </div>
             )}
           </div>
         </div>
