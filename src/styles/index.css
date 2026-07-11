@@ -56,4 +56,71 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  .home-hero-scene {
+    isolation: isolate;
+  }
+
+  .home-circuit-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(135deg, rgba(34, 211, 238, 0.16), transparent 36%),
+      linear-gradient(315deg, rgba(251, 146, 60, 0.14), transparent 34%);
+    background-size: 44px 44px, 44px 44px, 100% 100%, 100% 100%;
+    animation: homeGridDrift 18s linear infinite;
+  }
+
+  .home-scanline {
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.85), rgba(251, 191, 36, 0.8), transparent);
+    box-shadow: 0 0 28px rgba(34, 211, 238, 0.5);
+    animation: homeScanline 4.8s ease-in-out infinite;
+  }
+
+  .home-avatar-ring {
+    background:
+      conic-gradient(from 0deg, #22d3ee, #34d399, #fbbf24, #fb7185, #22d3ee);
+    animation: homeSpin 9s linear infinite;
+  }
+
+  .home-signal-card {
+    animation: homeSignalPulse 4s ease-in-out infinite;
+  }
+}
+
+@keyframes homeGridDrift {
+  from {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 44px 44px, 44px 44px, 0 0, 0 0;
+  }
+}
+
+@keyframes homeScanline {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.15;
+  }
+  45%, 55% {
+    transform: translateY(96vh);
+    opacity: 0.8;
+  }
+}
+
+@keyframes homeSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes homeSignalPulse {
+  0%, 100% {
+    transform: translateY(0);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    transform: translateY(-4px);
+    border-color: rgba(34, 211, 238, 0.34);
+  }
 }
