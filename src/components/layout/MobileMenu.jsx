@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Sparkles, X } from 'lucide-react';
+import { LogOut, Sparkles, UserRound, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { categories } from '../../data/categories.js';
 import { getIcon } from '../../utils/icons.js';
+import { useAuth } from '../../contexts/AuthContext.jsx';
 
 export default function MobileMenu({ open, onClose }) {
+  const { profile, role, logout } = useAuth();
+  const roleLabel = role || profile?.role || 'User';
+
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -21,6 +25,11 @@ export default function MobileMenu({ open, onClose }) {
         ? 'text-primary dark:text-primary-dark bg-primary/10'
         : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
     }`;
+
+  const handleLogout = async () => {
+    await logout();
+    onClose();
+  };
 
   return (
     <AnimatePresence>
@@ -59,6 +68,10 @@ export default function MobileMenu({ open, onClose }) {
             </div>
 
             <nav className="relative flex flex-col gap-2 p-4">
+              <div className="mb-2 flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+                <UserRound size={17} />
+                {roleLabel}
+              </div>
               <NavLink to="/" end onClick={onClose} className={linkClasses}>
                 首页
               </NavLink>
@@ -86,6 +99,16 @@ export default function MobileMenu({ open, onClose }) {
                     </NavLink>
                   );
                 })}
+
+              <div className="my-2 border-t border-slate-200 dark:border-white/10" />
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="flex items-center gap-2 rounded-xl px-4 py-3 text-left text-lg font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+              >
+                <LogOut size={17} />
+                退出登录
+              </button>
             </nav>
           </motion.div>
         </>

@@ -18,6 +18,12 @@ npm run build      # 生产构建
 npm run preview    # 预览生产构建
 ```
 
+## 登录功能
+
+当前项目已接入 Supabase Auth，未登录访问会先进入登录页。支持 QQ 邮箱、Gmail 邮箱、GitHub 和游客登录；用户身份记录在 `profiles` 数据表中，包含 `Developer` / `User` / `Guest`。
+
+真实上线前需要在 Supabase 与 Vercel 控制台完成环境变量、OAuth 和数据库 SQL 配置，详见 [docs/auth-setup.md](docs/auth-setup.md)。
+
 ---
 
 ## 项目状态

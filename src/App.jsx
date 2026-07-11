@@ -5,10 +5,12 @@ import { HelmetProvider } from 'react-helmet-async';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n/index.js';
 import { ThemeProvider } from './contexts/ThemeContext.jsx';
+import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import ErrorBoundary from './components/ui/ErrorBoundary.jsx';
 import Layout from './components/layout/Layout.jsx';
 import ScrollToTop from './components/layout/ScrollToTop.jsx';
 import LoadingScreen from './components/ui/LoadingScreen.jsx';
+import LoginPage from './pages/LoginPage.jsx';
 
 // 路由级代码分割
 const HomePage = lazy(() => import('./pages/HomePage.jsx'));
@@ -35,18 +37,36 @@ function AnimatedRoutes() {
   );
 }
 
+function AuthGate() {
+  const { loading, isAuthenticated } = useAuth();
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <AnimatedRoutes />
+    </Suspense>
+  );
+}
+
 function App() {
   return (
     <HelmetProvider>
       <ErrorBoundary>
         <I18nextProvider i18n={i18n}>
           <ThemeProvider>
-            <BrowserRouter>
-              <ScrollToTop />
-              <Suspense fallback={<LoadingScreen />}>
-                <AnimatedRoutes />
-              </Suspense>
-            </BrowserRouter>
+            <AuthProvider>
+              <BrowserRouter>
+                <ScrollToTop />
+                <AuthGate />
+              </BrowserRouter>
+            </AuthProvider>
           </ThemeProvider>
         </I18nextProvider>
       </ErrorBoundary>
