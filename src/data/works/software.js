@@ -7,7 +7,7 @@ export const softwareWorks = [
     id: 'sw-my-quant-web',
     category: 'software',
     title: { zh: 'My Quant Web 量化监控系统', en: 'My Quant Web Dashboard' },
-    coverImage: '/images/works/sample-software/cover.jpg',
+    coverImage: '/images/works/quant-dashboard.svg',
     description: {
       short: {
         zh: '面向个人量化实验的 React/Vite 看板，聚合实时数据、策略回测和多账户状态，让交易策略运行情况更容易被观察。',
@@ -39,7 +39,7 @@ export const softwareWorks = [
     id: 'sw-space-shooter',
     category: 'software',
     title: { zh: 'Space Shooter 太空射击游戏', en: 'Space Shooter Game' },
-    coverImage: '/images/works/sample-software/cover.jpg',
+    coverImage: '/images/works/space-shooter.svg',
     description: {
       short: {
         zh: '基于 React + Vite 的轻量级街机射击游戏，包含移动、射击、碰撞与音效反馈，适合作为前端游戏练习样例。',

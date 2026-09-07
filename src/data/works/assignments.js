@@ -7,7 +7,7 @@ export const assignmentsWorks = [
     id: 'as-algorithm-lab-report',
     category: 'assignments',
     title: { zh: '算法课程设计与实验报告', en: 'Algorithm Coursework Report' },
-    coverImage: '/images/works/sample-assignment/cover.jpg',
+    coverImage: '/images/works/algorithm-lab.svg',
     description: {
       short: {
         zh: '围绕数据结构与算法设计的课程作业归档，包含实验报告、实现思路和关键知识点总结。',

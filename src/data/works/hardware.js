@@ -17,7 +17,7 @@ export const hardwareWorks = [
     en: 'FPGA Vision Gesture Controller',
   },
 
-  coverImage: '/images/works/fpga-vision-gesture-controller/cover.jpg',
+  coverImage: '/images/works/fpga-vision.svg',
 
   description: {
     short: {
@@ -314,7 +314,7 @@ Gesture candidates enter a seven-frame sliding window:
       zh: '基于Blynk IoT的WiFi舵机控制器', 
       en: 'WiFi Servo Controller via Blynk IoT' 
     },
-    coverImage: '/images/works/wifi-servo/cover.jpg',
+    coverImage: '/images/works/wifi-servo.svg',
     description: {
       short: {
         zh: '用 ESP8266 + Blynk IoT 驱动 SG90 舵机，把手机指令转换成可靠的远程物理开关控制，并记录校园网与工具链避坑方案。',

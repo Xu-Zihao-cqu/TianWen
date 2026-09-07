@@ -882,3 +882,7 @@ v1 开发过程中，以下数据使用占位符填充，用户后续自行替�
 网站扩展为 Hardware / Software / Resources / Assignments / Blog 五板块。Blog 文章使用 Supabase blog_posts 表，不混入静态作品数组。列表与详情面向访客，发布与编辑仅面向 Developer；数据库 RLS 限制作者写入，沿用现有 profiles 角色。新增路由为 /works/blog、/works/blog/new、/works/blog/:postId 和 /works/blog/:postId/edit。详见 blog-setup.md。
 
 首页采用深色青绿主视觉、CSS 轨道与节点动画、双栏介绍和响应式精选网格；保留主题、国际化和减少动效。STM32 网关使用独立双语数据模块及原创 SVG 技术封面，硬件顺序固定首位。
+
+### 作品封面统一规范
+
+所有七件作品使用 1200×720 的轻量 SVG 技术插画。共用深色背景、细网格、轨道纹理及系列标记；各项目使用独立主体和强调色，主要图形置于中央以适应卡片 object-cover 裁切。文件统一位于 public/images/works/，由作品 coverImage 字段引用。

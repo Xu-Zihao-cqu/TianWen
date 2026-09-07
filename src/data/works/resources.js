@@ -7,7 +7,7 @@ export const resourcesWorks = [
     id: 'rs-learning-notes-toolkit',
     category: 'resources',
     title: { zh: '学习笔记与工具推荐', en: 'Learning Notes and Toolkit' },
-    coverImage: '/images/works/sample-resource/cover.jpg',
+    coverImage: '/images/works/learning-toolkit.svg',
     description: {
       short: {
         zh: '把课程学习、开发工具和踩坑记录整理成可复用的资源清单，方便后续查阅、复盘与分享。',
