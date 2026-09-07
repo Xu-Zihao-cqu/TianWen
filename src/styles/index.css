@@ -159,3 +159,39 @@
     border-color: rgba(34, 211, 238, 0.34);
   }
 }
+
+/* TianWen studio: restrained surfaces, living technical illustration. */
+@layer components {
+  .eyebrow { @apply font-mono text-xs font-medium uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300; }
+  .studio-panel { @apply rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-white/10 dark:bg-slate-900; }
+  .studio-button { @apply inline-flex items-center justify-center gap-3 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-teal-200 dark:text-slate-950 dark:hover:bg-teal-100; }
+  .studio-input { @apply block w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-500/20 dark:border-slate-700 dark:bg-slate-900; }
+}
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+:focus-visible { outline: 2px solid #14b8a6; outline-offset: 5px; }
+.studio-hero { min-height: min(900px, calc(100svh - 64px)); }
+.studio-grid { background-image: linear-gradient(#5eead408 1px, transparent 1px), linear-gradient(90deg, #5eead408 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(90deg, transparent, black); }
+.studio-aurora { position: absolute; inset: -30%; pointer-events: none; background: radial-gradient(ellipse at 73% 43%, #0d94852a, transparent 38%), radial-gradient(ellipse at 20% 20%, #0369a115, transparent 35%); animation: studioAurora 14s ease-in-out infinite alternate; }
+.studio-hero-word { background: linear-gradient(120deg,#ccfbf1,#5eead4 65%,#67e8f9); background-clip: text; -webkit-background-clip: text; color: transparent; }
+.studio-orbit-scene { aspect-ratio: 1; }
+.studio-orbit { position: absolute; border: 1px solid #5eead41f; border-radius: 50%; inset: 8%; animation: studioOrbit 36s linear infinite; }
+.studio-orbit::after { content: ''; position: absolute; width: 7px; height: 7px; background: #99f6e4; border-radius: 50%; left: 50%; top: -4px; box-shadow: 0 0 18px #5eead4; }
+.orbit-two { inset: 19%; border-style: dashed; animation-direction: reverse; animation-duration: 28s; }
+.orbit-three { inset: 0; border-color: #ffffff08; animation-duration: 55s; }
+.studio-core { position: absolute; inset: 28%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 1px solid #5eead438; border-radius: 30px; background: linear-gradient(140deg,#183c40e6,#0a151f); box-shadow: 0 0 100px #2dd4bf0d, inset 0 1px #ffffff17; transform: rotate(-8deg); }
+.studio-node { position: absolute; display: flex; align-items: center; gap: 12px; padding: 15px 18px; border: 1px solid #ffffff14; border-radius: 14px; background: #101e28e8; box-shadow: 0 15px 40px #0003; backdrop-filter: blur(12px); animation: studioFloat 6s ease-in-out infinite; }
+.node-hardware { top: 8%; left: 2%; }
+.node-software { top: 42%; right: -1%; animation-delay: -2s; }
+.node-connected { bottom: 13%; left: 3%; animation-delay: -4s; }
+@keyframes studioOrbit { to { transform: rotate(360deg); } }
+@keyframes studioFloat { 50% { transform: translateY(-10px); } }
+@keyframes studioAurora { to { transform: translate(4%, 3%) scale(1.08); } }
+@media (max-width: 640px) {
+  .studio-core { border-radius: 23px; }
+  .studio-core > div:first-child { font-size: 7px; }
+  .studio-node { padding: 10px 12px; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

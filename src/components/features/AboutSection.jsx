@@ -110,7 +110,7 @@ export default function AboutSection({ bio }) {
                       {category.description[locale]}
                     </p>
                     <p className="mt-4 text-xs font-semibold uppercase text-slate-400 dark:text-slate-500">
-                      {count} {locale === 'zh' ? '个作品' : 'works'}
+                      {category.id === 'blog' ? (locale === 'zh' ? '阅读手记 →' : 'Read the journal →') : `${count} ${locale === 'zh' ? '个作品' : 'works'}`}
                     </p>
                   </div>
                 </MotionLink>

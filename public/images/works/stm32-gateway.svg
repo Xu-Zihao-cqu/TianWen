@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<defs><radialGradient id="bg"><stop stop-color="#143d48"/><stop offset="1" stop-color="#07141e"/></radialGradient><linearGradient id="chip" x2="1" y2="1"><stop stop-color="#193d46"/><stop offset="1" stop-color="#0b1c28"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#70c7c4" stroke-opacity=".07"/></pattern></defs>
+<rect width="1200" height="720" fill="url(#bg)"/><rect width="1200" height="720" fill="url(#grid)"/>
+<g fill="none" stroke="#5eead4" stroke-opacity=".5" stroke-width="2"><path d="M0 280H290L380 360H460M0 430H260L330 390H460M740 345H845L930 255H1200M740 390H865L950 465H1200"/><circle cx="600" cy="355" r="210" stroke-opacity=".13"/><circle cx="600" cy="355" r="270" stroke-opacity=".07"/></g>
+<g fill="#5eead4"><circle cx="290" cy="280" r="5"/><circle cx="930" cy="255" r="5"/><circle cx="950" cy="465" r="5"/></g>
+<rect x="440" y="225" width="320" height="265" rx="28" fill="#0a1d28" stroke="#5eead4" stroke-opacity=".3"/><rect x="464" y="249" width="272" height="217" rx="14" fill="url(#chip)" stroke="#5eead4" stroke-opacity=".5"/>
+<g fill="#9ad5d1" font-family="Arial,sans-serif" text-anchor="middle"><text x="600" y="333" font-size="45" font-weight="700">STM32</text><text x="600" y="373" font-size="23" letter-spacing="6">F407</text><text x="600" y="419" font-size="12" letter-spacing="3">INDUSTRIAL EDGE GATEWAY</text></g>
+<g fill="#8db0ba" font-family="Arial,sans-serif" font-size="16" letter-spacing="3"><text x="84" y="112">TIANWEN / HARDWARE</text><text x="84" y="628">FIELD → EDGE → NETWORK</text><text x="925" y="628">FREERTOS</text></g><g fill="#d7fff5" font-family="Arial,sans-serif" font-size="18"><text x="100" y="260">RS485 / MODBUS</text><text x="966" y="236">MQTT / WEB</text><text x="984" y="501">VISION</text></g>
+</svg>

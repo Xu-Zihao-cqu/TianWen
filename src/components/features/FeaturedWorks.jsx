@@ -9,7 +9,7 @@ export default function FeaturedWorks({ works }) {
   const { locale } = useI18n();
 
   return (
-    <section className="relative overflow-hidden bg-[#f7f8fb] dark:bg-slate-950">
+    <section id="selected-work" className="relative overflow-hidden bg-[#f7f8fb] dark:bg-slate-950">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-slate-700" />
       <div className="mx-auto max-w-6xl px-4 py-20 md:py-28">
         <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
@@ -19,12 +19,12 @@ export default function FeaturedWorks({ works }) {
               {locale === 'zh' ? '精选展示' : 'Showcase'}
             </div>
             <h2 className="font-heading text-3xl font-black text-slate-950 dark:text-white md:text-5xl">
-              {locale === 'zh' ? '最近值得看的作品' : 'Recent Work Worth Opening'}
+              {locale === 'zh' ? '从构想到实现。' : 'From concept to creation.'}
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-7 text-slate-500 dark:text-slate-400">
               {locale === 'zh'
-                ? '挑几件最能代表方向的项目放在首页，先看封面和摘要，再进入完整细节。'
-                : 'A focused shelf of representative projects, from visual summaries to full build notes.'}
+                ? '每一件作品，都是一次将好奇心付诸实践的回答。'
+                : 'Every project is an answer to a question worth exploring.'}
             </p>
           </div>
           <Link
@@ -47,10 +47,10 @@ export default function FeaturedWorks({ works }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.55 }}
-            className="-mx-4 flex snap-x gap-5 overflow-x-auto px-4 pb-5"
+            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             {works.map((work) => (
-              <WorkCard key={work.id} work={work} compact />
+              <WorkCard key={work.id} work={work} />
             ))}
           </motion.div>
         )}

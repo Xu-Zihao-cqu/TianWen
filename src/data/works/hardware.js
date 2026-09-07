@@ -2,7 +2,10 @@
  * 硬件项目作品
  * ID 命名规范：hw-{slug}，全局唯一
  */
+import { stm32Gateway } from './stm32Gateway.js';
+
 export const hardwareWorks = [
+  stm32Gateway,
   // FPGA 实时视觉手势控制器
 // FPGA 实时视觉手势控制器
 {

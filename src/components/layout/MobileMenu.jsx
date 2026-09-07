@@ -5,8 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { categories } from '../../data/categories.js';
 import { getIcon } from '../../utils/icons.js';
 import { useAuth } from '../../contexts/AuthContext.jsx';
+import { useI18n } from '../../hooks/useI18n.js';
 
 export default function MobileMenu({ open, onClose }) {
+  const { locale } = useI18n();
   const { profile, role, logout } = useAuth();
   const roleLabel = role || profile?.role || 'User';
 
@@ -48,7 +50,7 @@ export default function MobileMenu({ open, onClose }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed bottom-0 right-0 top-0 z-50 w-80 max-w-[86vw] overflow-hidden border-l border-slate-200 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95"
+            className="fixed bottom-0 right-0 top-0 z-50 w-80 max-w-[86vw] overflow-y-auto border-l border-slate-200 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95"
           >
             <div className="home-circuit-grid pointer-events-none absolute inset-0 opacity-10" />
             <div className="relative flex items-center justify-between border-b border-slate-200 p-4 dark:border-white/10">
@@ -73,15 +75,15 @@ export default function MobileMenu({ open, onClose }) {
                 {roleLabel}
               </div>
               <NavLink to="/" end onClick={onClose} className={linkClasses}>
-                首页
+                {locale === 'zh' ? '首页' : 'Home'}
               </NavLink>
               <NavLink to="/works" onClick={onClose} className={linkClasses}>
-                作品集
+                {locale === 'zh' ? '作品集' : 'Works'}
               </NavLink>
 
               <div className="my-2 border-t border-slate-200 dark:border-white/10" />
 
-              {categories
+              {[...categories]
                 .sort((a, b) => a.sortOrder - b.sortOrder)
                 .map((c) => {
                   const Icon = getIcon(c.icon);
@@ -94,7 +96,7 @@ export default function MobileMenu({ open, onClose }) {
                     >
                       <span className="inline-flex items-center gap-2">
                         {Icon && <Icon size={17} />}
-                        {c.name.zh}
+                        {c.name[locale]}
                       </span>
                     </NavLink>
                   );
@@ -107,7 +109,7 @@ export default function MobileMenu({ open, onClose }) {
                 className="flex items-center gap-2 rounded-xl px-4 py-3 text-left text-lg font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 <LogOut size={17} />
-                退出登录
+                {locale === 'zh' ? '退出登录' : 'Sign out'}
               </button>
             </nav>
           </motion.div>

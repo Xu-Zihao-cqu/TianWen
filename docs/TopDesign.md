@@ -876,3 +876,9 @@ v1 开发过程中，以下数据使用占位符填充，用户后续自行替�
 ---
 
 *本文档为顶层设计，指导 v1 全部开发工作。随开发推进，如发现设计与实现偏差，需回更新此文档。*
+
+## 2026-09-07 设计增量
+
+网站扩展为 Hardware / Software / Resources / Assignments / Blog 五板块。Blog 文章使用 Supabase blog_posts 表，不混入静态作品数组。列表与详情面向访客，发布与编辑仅面向 Developer；数据库 RLS 限制作者写入，沿用现有 profiles 角色。新增路由为 /works/blog、/works/blog/new、/works/blog/:postId 和 /works/blog/:postId/edit。详见 blog-setup.md。
+
+首页采用深色青绿主视觉、CSS 轨道与节点动画、双栏介绍和响应式精选网格；保留主题、国际化和减少动效。STM32 网关使用独立双语数据模块及原创 SVG 技术封面，硬件顺序固定首位。

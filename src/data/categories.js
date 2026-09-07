@@ -36,4 +36,12 @@ export const categories = [
     gradient: { from: '#a78bfa', to: '#ec4899' },
     sortOrder: 4,
   },
+  {
+    id: 'blog',
+    name: { zh: '博客', en: 'Blog' },
+    description: { zh: '开发手记、思考与探索', en: 'Engineering notes, ideas & discoveries' },
+    icon: 'file-text',
+    gradient: { from: '#14b8a6', to: '#0f766e' },
+    sortOrder: 5,
+  },
 ];

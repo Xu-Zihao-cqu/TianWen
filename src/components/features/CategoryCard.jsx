@@ -37,7 +37,7 @@ export default function CategoryCard({ category, count = 0 }) {
               {category.description[locale]}
             </p>
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-white/60">
-              {count} {locale === 'zh' ? '个作品' : 'works'}
+              {category.id === 'blog' ? (locale === 'zh' ? '阅读手记 →' : 'Read the journal →') : `${count} ${locale === 'zh' ? '个作品' : 'works'}`}
             </p>
           </div>
         </div>

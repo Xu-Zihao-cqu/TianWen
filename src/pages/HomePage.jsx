@@ -25,9 +25,9 @@ export default function HomePage() {
         <meta property="og:site_name" content={defaultSEO.siteName} />
       </Helmet>
       <HeroSection profile={profile} />
+      <FeaturedWorks works={featuredWorks} />
       <AboutSection bio={profile.bio} />
       <SkillsSection skills={skills} />
-      <FeaturedWorks works={featuredWorks} />
       <ContactSection contact={profile.contact} />
     </>
   );

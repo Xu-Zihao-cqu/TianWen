@@ -21,7 +21,7 @@ export default function Navbar() {
   ];
 
   const linkClasses = ({ isActive }) =>
-    `rounded-full px-3 py-2 text-sm font-semibold transition-all ${
+    `rounded-full px-2.5 py-2 text-xs font-semibold transition-all ${
       isActive
         ? 'bg-slate-950 text-white shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950'
         : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white'
@@ -30,7 +30,7 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed left-0 right-0 top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/70">
-        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+        <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
           <Link to="/" className="group inline-flex items-center gap-2">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-950 text-white shadow-lg shadow-slate-900/15 transition-transform group-hover:-rotate-3 dark:bg-white dark:text-slate-950">
               <Sparkles size={17} />
@@ -43,7 +43,7 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-white/75 p-1 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5 lg:flex">
+          <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-white/75 p-1 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5 xl:flex">
             {navLinks.map((link) => (
               <NavLink key={link.to} to={link.to} end={link.end} className={linkClasses}>
                 {link.label}
@@ -51,7 +51,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-white/75 p-1 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5 md:flex">
+          <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-white/75 p-1 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-white/5 xl:flex">
             {categories.map((c) => (
               <NavLink key={c.id} to={`/works/${c.id}`} className={linkClasses}>
                 {({ isActive }) => {
@@ -84,7 +84,7 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => setMenuOpen(true)}
-              className="rounded-full p-2 transition-colors hover:bg-slate-100 dark:hover:bg-white/10 md:hidden"
+              className="rounded-full p-2 transition-colors hover:bg-slate-100 dark:hover:bg-white/10 xl:hidden"
               aria-label="打开菜单"
             >
               <Menu size={20} />

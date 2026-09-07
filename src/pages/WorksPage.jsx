@@ -8,19 +8,19 @@ export default function WorksPage() {
   const { locale, t } = useI18n();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
+    <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <Helmet>
         <title>{t('nav.works')} | 天问 TianWen</title>
         <meta name="description" content={locale === 'zh'
-          ? '硬件、软件、资源分享与在校作业 — 四大板块作品集。'
-          : 'Hardware, software, resources and assignments — four categories of works.'} />
+          ? '硬件、软件、资源、作业与博客 — 五个持续探索的方向。'
+          : 'Hardware, software, resources, assignments and Blog — five disciplines.'} />
       </Helmet>
       <PageHeader
         className="mb-8"
         title={locale === 'zh' ? '作品集' : 'Portfolio'}
         subtitle={locale === 'zh'
-          ? '四大板块，涵盖硬件、软件、资源与作业'
-          : 'Four categories covering hardware, software, resources, and assignments'}
+          ? '五个方向，一份持续生长的创造记录'
+          : 'Five disciplines. One ever-evolving body of work.'}
       />
       <CategoryGrid categories={categories} />
     </div>
