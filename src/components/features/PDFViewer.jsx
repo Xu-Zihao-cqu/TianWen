@@ -13,11 +13,13 @@ export default function PDFViewer({ url }) {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageWidth, setPageWidth] = useState(800);
 
+  useEffect(() => { setNumPages(null); setPageNumber(1); }, [url]);
+
   useEffect(() => {
     if (!containerRef.current) return;
 
     const updateWidth = () => {
-      setPageWidth(Math.min(Math.max(containerRef.current.clientWidth - 40, 280), 800));
+      setPageWidth(Math.min(Math.max(containerRef.current.clientWidth - 32, 140), 800));
     };
 
     updateWidth();
@@ -61,6 +63,7 @@ export default function PDFViewer({ url }) {
         <div className="flex items-center justify-center gap-4 border-t border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
           <button
             type="button"
+            aria-label="Previous page"
             onClick={() => setPageNumber((p) => Math.max(1, p - 1))}
             disabled={pageNumber <= 1}
             className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700 disabled:opacity-30"
@@ -72,6 +75,7 @@ export default function PDFViewer({ url }) {
           </span>
           <button
             type="button"
+            aria-label="Next page"
             onClick={() => setPageNumber((p) => Math.min(numPages, p + 1))}
             disabled={pageNumber >= numPages}
             className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700 disabled:opacity-30"

@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown';
+import CodeBlock from './CodeBlock.jsx';
 import {
   Activity,
   ArrowDown,
@@ -285,11 +286,7 @@ const markdownComponents = {
       {children}
     </blockquote>
   ),
-  pre: ({ children }) => (
-    <pre className="my-6 overflow-x-auto rounded-2xl bg-slate-950 p-5 text-sm leading-7 text-slate-100 shadow-inner shadow-black/30">
-      {children}
-    </pre>
-  ),
+  pre: ({ children }) => <CodeBlock code={String(children?.props?.children || '').replace(/\n$/, '')} language={children?.props?.className?.replace('language-', '') || 'text'} />,
   code: ({ children, className: codeClass }) => {
     const isInline = !codeClass;
     return isInline ? (
@@ -320,7 +317,7 @@ const markdownComponents = {
   ),
 };
 
-export default function MarkdownRenderer({ content, className }) {
+export default function MarkdownRenderer({ content, className, components = {} }) {
   const blocks = splitMarkdownBlocks(content);
 
   return (
@@ -331,7 +328,7 @@ export default function MarkdownRenderer({ content, className }) {
         ) : block.type === 'flow' ? (
           <SystemFlowDiagram key={index} steps={block.steps} />
         ) : (
-          <ReactMarkdown key={index} components={markdownComponents}>
+          <ReactMarkdown key={index} components={{ ...markdownComponents, ...components }}>
             {block.text}
           </ReactMarkdown>
         )

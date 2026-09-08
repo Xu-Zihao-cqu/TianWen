@@ -886,3 +886,7 @@ v1 开发过程中，以下数据使用占位符填充，用户后续自行替�
 ### 作品封面统一规范
 
 所有七件作品使用 1200×720 的轻量 SVG 技术插画。共用深色背景、细网格、轨道纹理及系列标记；各项目使用独立主体和强调色，主要图形置于中央以适应卡片 object-cover 裁切。文件统一位于 public/images/works/，由作品 coverImage 字段引用。
+
+### Blog 多媒体增量
+
+blog_posts 新增 attachments JSONB 与 cover_image；blog-assets 公开桶限制 Developer 自身目录写入。附件分图片、代码、PDF、DOCX 本地预览和 DOC 按需在线预览。编辑器支持本机草稿、粘贴/拖放上传和封面选择；阅读页增加进度与目录，列表增加封面与动态 Journal 主视觉。文件限制和迁移顺序详见 blog-setup.md。
