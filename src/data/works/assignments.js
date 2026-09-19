@@ -3,33 +3,33 @@
  * ID 命名规范：as-{slug}，全局唯一
  */
 export const assignmentsWorks = [
-  {
-    id: 'as-algorithm-lab-report',
-    category: 'assignments',
-    title: { zh: '算法课程设计与实验报告', en: 'Algorithm Coursework Report' },
-    coverImage: '/images/works/algorithm-lab.svg',
+    {
+    id: 'Intellignet Car',
+    category: 'resources',
+    title: { zh: '智能小车', en: 'Intellignet Car' },
+    coverImage: '/images/works/inte-car.svg',
     description: {
       short: {
-        zh: '围绕数据结构与算法设计的课程作业归档，包含实验报告、实现思路和关键知识点总结。',
-        en: 'A coursework archive around data structures and algorithm design, including the report, implementation ideas, and key concept notes.',
+        zh: '支持循迹、超声波避障、蓝牙的智能小车项目 。',
+        en: 'Smart car project supporting line tracking, ultrasonic obstacle avoidance, and Bluetooth connectivity.',
       },
       full: {
-        zh: '## 作业简介\n\n课程设计或实验报告内容。\n\n## 涉及知识点\n\n- 数据结构\n- 算法设计',
-        en: '## Overview\n\nCoursework design or lab report.\n\n## Topics\n\n- Data Structures\n- Algorithm Design',
+        zh: '## 内容简介\n\n该项目使用IRT9909实现循迹功能、使用JDY-31实现蓝牙通信、使用HCSR04实现超声波避障,不同功能依靠用户按键切换。',
+        en: '## Overview\n\nThis project utilizes the IRT9909 for line-following, the JDY-31 for Bluetooth communication, and the HCSR04 for ultrasonic obstacle avoidance, with different functions toggled via user buttons.',
       },
     },
-    tags: ['课程设计', '算法', '2024'],
+    tags: ['On-school Honework',  '2026'],
     files: [
       {
-        name: 'report.pdf',
-        type: 'pdf',
-        size: '1.2 MB',
-        url: '/files/assignments/report.pdf',
+        name: 'inte_car.rar',
+        type: 'rar',
+        size: '800 KB',
+        url: '/files/assignments/inte_car/inte_car.rar',
         previewable: true,
       },
     ],
     externalLinks: [],
     featured: false,
-    createdAt: '2024-12-10',
-  },
+    createdAt: '2025-09-19',
+  }
 ];
