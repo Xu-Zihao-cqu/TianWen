@@ -16,6 +16,7 @@ npm install        # 安装依赖（首次）
 npm run dev        # 启动开发服务器 → http://localhost:5173
 npm run build      # 生产构建
 npm run preview    # 预览生产构建
+npm test           # 运行 Blog 数据和错误处理测试
 ```
 
 ## 登录功能
@@ -23,6 +24,15 @@ npm run preview    # 预览生产构建
 当前项目已接入 Supabase Auth，未登录访问会先进入登录页。支持 QQ 邮箱、Gmail 邮箱、GitHub 和游客登录；用户身份记录在 `profiles` 数据表中，包含 `Developer` / `User` / `Guest`。
 
 真实上线前需要在 Supabase 与 Vercel 控制台完成环境变量、OAuth 和数据库 SQL 配置，详见 [docs/auth-setup.md](docs/auth-setup.md)。
+
+### Blog 数据库初始化
+
+Blog 不是静态数据，GitHub 或 Vercel 部署不会自动创建数据库表。首次启用时，在 Supabase SQL Editor 中执行：
+
+1. `supabase/schema.sql`（已有 `public.profiles` 时跳过）。
+2. `supabase/migrations/20260919_blog_bootstrap.sql`。
+
+第二个脚本可重复执行，会一次性创建文章表、RLS 发布权限、媒体字段和 `blog-assets` 存储桶，并刷新 API schema cache。完整验证方法见 [docs/blog-setup.md](docs/blog-setup.md)。
 
 ---
 

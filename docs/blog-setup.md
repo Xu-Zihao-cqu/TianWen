@@ -18,14 +18,26 @@ Blog 与硬件、软件、资源、作业并列，沿用现有 Supabase 登录�
 
 ## 一次性数据库与 Storage 配置
 
-按顺序执行：
-1. `supabase/schema.sql`（已有认证项目无须重复）。
-2. `supabase/migrations/20260907_blog.sql`（文章表，已执行则跳过）。
-3. `supabase/migrations/20260908_blog_media.sql`（新增 attachments/cover_image 字段和 blog-assets 存储桶）。
+在 Supabase Dashboard → SQL Editor 中按顺序执行：
+
+1. `supabase/schema.sql`（已有 `public.profiles` 的认证项目无须重复）。
+2. `supabase/migrations/20260919_blog_bootstrap.sql`。
+
+第二个脚本可以安全地重复执行：它会创建或补齐 `blog_posts`、RLS、更新时间触发器和 `blog-assets` 存储桶，并主动刷新 PostgREST schema cache。`20260907_blog.sql` 与 `20260908_blog_media.sql` 保留为历史增量迁移，新项目无需再分别执行。
+
+执行后可在 SQL Editor 验证：
+
+```sql
+select
+  to_regclass('public.blog_posts') as blog_table,
+  exists(select 1 from storage.buckets where id = 'blog-assets') as storage_ready;
+```
+
+结果应为 `blog_table = blog_posts`、`storage_ready = true`。如果网页仍显示旧错误，刷新页面并重新登录。
 
 blog-assets 为公开附件桶；最大 20 MB，限制 MIME 类型。RLS 只允许 Developer 向自身用户 ID 目录上传，不授予覆盖和删除权限。现有文章作者编辑权限保持不变。浏览器不包含服务端密钥。
 
-GitHub 推送、Vercel 前端构建不会自动执行 SQL。按用户指示本次不操作线上 Supabase，因此线上上传发布需要先应用迁移；尚未进行真实线上上传验证。
+GitHub 推送和 Vercel 前端构建不会自动执行 SQL。新环境上线时必须先执行上述初始化脚本，否则网页会明确提示 Blog 数据库尚未初始化。
 
 ## 实现依据
 
