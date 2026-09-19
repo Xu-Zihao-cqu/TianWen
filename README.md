@@ -1,11 +1,11 @@
 # 天问 TianWen
 
-个人作品展览网页，展示硬件项目、软件项目、资源分享、在校作业四大类作品。
+个人作品展览网页，展示硬件项目、软件项目、资源分享、在校作业和博客五个板块。
 
 **技术栈：** React 18 + Vite 5 + Tailwind CSS 3 + Framer Motion 11  
 **仓库：** [github.com/Xu-Zihao-cqu/TianWen](https://github.com/Xu-Zihao-cqu/TianWen)
 
-**日常维护：** 见 [usersheet.md](usersheet.md)
+**日常维护：** 见 [usersheet.md](usersheet.md)；新增作品与 Git 提交流程见本文“提交新作品”章节。
 
 ---
 
@@ -41,7 +41,7 @@ npm run preview    # 预览生产构建
 
 - 首页动态电路网格 Hero + 创作工作台 + 技能控制台 + 精选作品舞台 + 联系 CTA
 - 玻璃质感导航栏、移动端滑入菜单、暗色科技感 Footer
-- 作品集主页 4 张渐变入口卡片，按 `categories.js` 自动生成
+- 作品集主页 5 张板块入口卡片，按 `categories.js` 自动生成
 - 作品列表页卡片网格 + 标签多选筛选（URL 同步）+ 空状态
 - 作品详情页封面预览 + 项目摘要 + Markdown + 系统架构彩色框图 + 附件下载/预览 + 外部链接
 - 暗色/亮色双主题（localStorage 持久化，首次跟随系统）
@@ -53,7 +53,8 @@ npm run preview    # 预览生产构建
 - SEO meta + OG 标签（每页面独立）
 - GA4 + 百度统计（仅生产环境，环境变量控制）
 - 四款字体自托管（Inter, Space Grotesk, JetBrains Mono, Noto Sans SC）
-- Vercel 一键部署（push 即自动 CI/CD）
+- Developer 在线发布 Blog，支持图片、代码、PDF 与 Word 附件
+- Vercel 一键部署（推送到 `main` 后自动 CI/CD）
 
 ---
 
@@ -62,7 +63,7 @@ npm run preview    # 预览生产构建
 ```
 / (首页)
 ├── Hero       动态电路网格 + 头像光环 + 打字机 + 统计数据 + CTA
-├── 创作工作台  关于我 + 创作原则 + 四大板块入口
+├── 创作工作台  关于我 + 创作原则 + 五大板块入口
 ├── 技能控制台  分类 Tab + 技能卡片 + 动态进度条
 ├── 精选作品    横向滚动，featured:true 的作品
 └── 联系 CTA    邮箱 + GitHub + 社交入口
@@ -71,7 +72,8 @@ npm run preview    # 预览生产构建
 ├── 硬件项目入口 → /works/hardware
 ├── 软件项目入口 → /works/software
 ├── 资源分享入口 → /works/resources
-└── 在校作业入口 → /works/assignments
+├── 在校作业入口 → /works/assignments
+└── 博客入口     → /works/blog
 
 /works/:category (作品列表页)
 ├── 标签筛选栏   多选 OR 逻辑，URL ?tags= 同步
@@ -125,11 +127,22 @@ tianwen/
 
 ---
 
-## 如何上传作品
+## 提交新作品
 
-常规情况下只编辑数据文件和 `public/` 静态文件，无需改动任何组件代码。更详细的每日/每次上传流程见 [usersheet.md](usersheet.md)。
+常规情况下只需修改 `src/data/works/` 中对应板块的数据文件，并把封面和附件放入 `public/`。不需要修改页面组件。
 
-### 1. 编辑数据文件
+### 1. 选择正确的数据文件
+
+| 板块 | 数据文件 | `category` | ID 前缀 |
+|---|---|---|---|
+| 硬件项目 | `src/data/works/hardware.js` | `hardware` | `hw-` |
+| 软件项目 | `src/data/works/software.js` | `software` | `sw-` |
+| 资源分享 | `src/data/works/resources.js` | `resources` | `rs-` |
+| 在校作业 | `src/data/works/assignments.js` | `assignments` | `as-` |
+
+只有被 `src/data/works/index.js` 导入的数据文件会显示在网站中。不要另外创建 `Homework.js` 一类的孤立文件；在校作业统一写入 `assignments.js`。
+
+### 2. 编辑作品数据
 
 打开 `src/data/works/` 下对应板块的 JS 文件，在数组中添加：
 
@@ -138,7 +151,7 @@ tianwen/
   id: 'hw-my-project',                  // 全局唯一 ID，格式：{hw/sw/rs/as}-{slug}
   category: 'hardware',
   title: { zh: '我的项目', en: 'My Project' },
-  coverImage: '/images/works/hw-my-project/cover.jpg',
+  coverImage: '/images/works/hw-my-project.svg',
   description: {
     short: { zh: '简短描述...', en: 'Short description...' },
     full: { zh: '## 项目简介\n\nMarkdown 详细描述...', en: '## Overview\n\nMarkdown detail...' },
@@ -161,19 +174,70 @@ tianwen/
 },
 ```
 
-### 2. 放入静态文件
+注意事项：
+
+- `id` 必须全站唯一，只使用小写英文、数字和连字符。
+- `category` 必须和所在板块一致，否则卡片会出现在错误页面。
+- 中英文标题、简介都要填写；日期格式使用 `YYYY-MM-DD`。
+- PDF 和单个代码文件可设置 `previewable: true`；RAR、ZIP、固件等下载文件使用 `type: 'binary'` 或 `zip`，并设置 `previewable: false`。
+- `size` 应填写实际文件大小。
+
+### 3. 放入封面和附件
 
 ```
 public/
-├── images/works/hw-my-project/
-│   └── cover.jpg                          # 封面图（推荐 800×500）
+├── images/works/
+│   └── hw-my-project.svg                    # 推荐比例 1200×720
 └── files/hardware/hw-my-project/
-    └── schematic.pdf                       # 可下载/预览文件
+    └── schematic.pdf                        # URL 从 /files/ 开始
 ```
 
-### 3. 完成
+路径区分大小写。数据中的 `/images/...` 和 `/files/...` 都从 `public/` 后一级开始写，不包含 `public`。
 
-保存刷新 — 新作品自动出现在列表和详情页。
+### 4. 本地验证
+
+```bash
+npm install             # 仅首次或 package.json 变化后执行
+npm run dev             # 浏览器检查卡片、详情和附件
+npm run build           # 必须成功生成生产版本
+git diff --check        # 检查空白符错误
+git status --short      # 确认只包含本次需要提交的文件
+```
+
+至少检查：
+
+1. 作品是否出现在正确板块。
+2. 中英文切换后的标题和详情是否正常。
+3. 封面是否加载、手机端是否裁切合理。
+4. 附件能否下载；标记可预览的文件能否打开。
+
+### 5. 提交并推送 GitHub
+
+```bash
+git add src/data/works/对应文件.js \
+        public/images/works/封面文件 \
+        public/files/板块/项目目录
+
+git commit -m "content: add 项目英文名称"
+git push origin main
+```
+
+在 Windows PowerShell 中也可以逐项执行 `git add`，或确认 `git status --short` 没有无关文件后使用：
+
+```powershell
+git add src/data/works/assignments.js public/images/works/intelligent-car.svg public/files/assignments/inte_car/inte_car.rar
+git commit -m "content: add STM32 intelligent car coursework"
+git push origin main
+```
+
+推送前不要使用 `git add .`，除非你已经逐项确认工作区的所有改动都属于本次提交。推送后可用以下命令确认本地提交和远程分支一致：
+
+```bash
+git status
+git log -1 --oneline
+```
+
+如果 Vercel 已连接该仓库，`main` 分支推送成功后会自动开始部署。
 
 ---
 
