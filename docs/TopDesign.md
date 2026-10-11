@@ -890,3 +890,7 @@ v1 开发过程中，以下数据使用占位符填充，用户后续自行替�
 ### Blog 多媒体增量
 
 blog_posts 新增 attachments JSONB 与 cover_image；blog-assets 公开桶限制 Developer 自身目录写入。附件分图片、代码、PDF、DOCX 本地预览和 DOC 按需在线预览。编辑器支持本机草稿、粘贴/拖放上传和封面选择；阅读页增加进度与目录，列表增加封面与动态 Journal 主视觉。文件限制和迁移顺序详见 blog-setup.md。
+
+### 2026-10-11 Blog 阅读布局
+
+Blog 列表参考 yayujs.com/blog 的作者侧栏、轻量列表和年份归档结构，使用真实文章年份筛选，不引入虚构分类。保留搜索、封面缩略图、Developer 发布入口及加载/失败/空状态；支持移动端、明暗主题。
