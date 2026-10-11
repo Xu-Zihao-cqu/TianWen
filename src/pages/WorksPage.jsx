@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import { Helmet } from 'react-helmet-async';
 import { useI18n } from '../hooks/useI18n.js';
 import PageHeader from '../components/ui/PageHeader.jsx';
@@ -6,6 +8,7 @@ import { categories } from '../data/categories.js';
 
 export default function WorksPage() {
   const { locale, t } = useI18n();
+  const { role } = useAuth();
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
@@ -22,6 +25,7 @@ export default function WorksPage() {
           ? '五个方向，一份持续生长的创造记录'
           : 'Five disciplines. One ever-evolving body of work.'}
       />
+      {role === 'Developer' && <Link to="/works/new" className="studio-button mb-8">{locale === 'zh' ? '上传新作品 ↗' : 'Upload a new work ↗'}</Link>}
       <CategoryGrid categories={categories} />
     </div>
   );

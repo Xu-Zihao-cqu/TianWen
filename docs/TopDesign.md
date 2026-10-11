@@ -898,3 +898,7 @@ Blog 列表参考 yayujs.com/blog 的作者侧栏、轻量列表和年份归档�
 ### 2026-10-11 下载约定
 
 所有显式附件下载经 DownloadButton 校验，缺失或 SPA HTML 回退进入独立 download-missing.html 彩蛋页。下载次数由 Supabase RPC 原子累加，文件获取成功并触发保存后记录；不记录失败或预览。数据结构与部署见 uploads-setup.md。
+
+### 2026-10-11 在线作品发布
+
+在既有十三步实现完成后依次扩展 Blog 阅读布局、下载彩蛋、下载统计与作品发布。`/works/new` 为 Developer 创作入口。Supabase works + work-assets 保存线上作品与资源；useWorks 将其合并进原有静态作品，沿用卡片字段、Markdown、文件下载与标签过滤。支持封面/图集、Markdown 导入、附件、实时预览和本机草稿，部署与权限说明见 uploads-setup.md。新增功能分数据服务、编辑器、展示接入、验证文档四小步完成。

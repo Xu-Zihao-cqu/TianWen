@@ -20,6 +20,7 @@ const WorkDetailPage = lazy(() => import('./pages/WorkDetailPage.jsx'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'));
 const BlogPage = lazy(() => import('./pages/BlogPage.jsx'));
 const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage.jsx'));
+const WorkEditorPage = lazy(() => import('./pages/WorkEditorPage.jsx'));
 const BlogEditorPage = lazy(() => import('./pages/BlogEditorPage.jsx'));
 
 function AnimatedRoutes() {
@@ -35,6 +36,7 @@ function AnimatedRoutes() {
           <Route path="works/blog/new" element={<BlogEditorPage />} />
           <Route path="works/blog/:postId/edit" element={<BlogEditorPage />} />
           <Route path="works/blog/:postId" element={<BlogDetailPage />} />
+          <Route path="works/new" element={<WorkEditorPage />} />
           <Route path="works/:category" element={<WorksListPage />} />
           <Route path="works/:category/:workId" element={<WorkDetailPage />} />
           <Route path="*" element={<NotFoundPage />} />

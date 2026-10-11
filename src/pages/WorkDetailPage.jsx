@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useI18n } from '../hooks/useI18n.js';
-import { getWorkById } from '../data/works/index.js';
+import { useWorks } from '../hooks/useWorks.js';
 import { categories } from '../data/categories.js';
 import Badge from '../components/ui/Badge.jsx';
 import LazyImage from '../components/ui/LazyImage.jsx';
@@ -174,7 +174,10 @@ export default function WorkDetailPage() {
   const { category, workId } = useParams();
   const { locale } = useI18n();
 
-  const work = getWorkById(workId);
+  const { works, loading, error, retry } = useWorks();
+  const work = works.find(w => w.id === workId && w.category === category);
+  if (!work && loading) return <p role="status" className="p-12">{locale === 'zh' ? '正在加载作品…' : 'Loading work…'}</p>;
+  if (!work && error) return <div role="alert" className="p-12"><p>{error}</p><button onClick={retry} className="mt-4 underline">{locale === 'zh' ? '重试' : 'Retry'}</button></div>;
 
   if (!work) {
     return <Navigate to="/not-found" replace />;
@@ -192,6 +195,7 @@ export default function WorkDetailPage() {
         <meta property="og:image" content={work.coverImage} />
       </Helmet>
       <WorkHeader work={work} />
+      {work.images?.length > 1 && <section className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2" aria-label={locale === 'zh' ? '作品图片' : 'Project gallery'}>{work.images.map(image => <a key={image.path} href={image.url} target="_blank" rel="noopener noreferrer" className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700"><img src={image.url} alt={image.name} loading="lazy" className="aspect-video w-full bg-slate-100 object-contain transition hover:scale-105 dark:bg-slate-950" /></a>)}</section>}
       <section className="mb-12 rounded-2xl border border-slate-200 bg-white p-5 shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900 dark:shadow-slate-950/30 md:p-8">
         <MarkdownRenderer content={work.description?.full?.[locale]} />
       </section>

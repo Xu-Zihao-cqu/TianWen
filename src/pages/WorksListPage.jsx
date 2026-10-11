@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useI18n } from '../hooks/useI18n.js';
 import { useTagFilter } from '../hooks/useTagFilter.js';
-import { getWorksByCategory, getAllWorks, getAllTags } from '../data/works/index.js';
+import { useWorks } from '../hooks/useWorks.js';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import { categories } from '../data/categories.js';
 import PageHeader from '../components/ui/PageHeader.jsx';
 import TagFilter from '../components/features/TagFilter.jsx';
@@ -15,10 +16,9 @@ export default function WorksListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { locale } = useI18n();
 
-  const works = useMemo(
-    () => (category ? getWorksByCategory(category) : getAllWorks()),
-    [category],
-  );
+  const { works: allWorks, loading, error, retry } = useWorks();
+  const { role } = useAuth();
+  const works = useMemo(() => category ? allWorks.filter(w => w.category === category) : allWorks, [allWorks, category]);
 
   const selectedTags = useMemo(
     () => searchParams.get('tags')?.split(',').filter(Boolean) || [],
@@ -50,10 +50,7 @@ export default function WorksListPage() {
     ? `${categoryInfo.name[locale]} | 天问 TianWen`
     : '天问 TianWen';
 
-  const allTags = useMemo(
-    () => (category ? getAllTags(category) : getAllTags()),
-    [category],
-  );
+  const allTags = useMemo(() => [...new Set(works.flatMap(w => w.tags))].sort(), [works]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -62,6 +59,9 @@ export default function WorksListPage() {
         {subtitle && <meta name="description" content={subtitle} />}
       </Helmet>
       <PageHeader title={title} subtitle={subtitle} className="mb-8" />
+      {role === 'Developer' && <Link to="/works/new" className="studio-button mb-6">{locale === 'zh' ? '上传作品' : 'Upload work'}</Link>}
+      {loading && <p role="status" className="mb-4 text-sm text-slate-500">{locale === 'zh' ? '正在加载线上作品…' : 'Loading uploaded works…'}</p>}
+      {error && <p role="alert" className="mb-4 text-sm text-slate-500">{error} <button onClick={retry} className="underline">{locale === 'zh' ? '重试' : 'Retry'}</button></p>}
       <TagFilter
         availableTags={allTags}
         selectedTags={selectedTags}
