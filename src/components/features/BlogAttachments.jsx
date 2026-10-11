@@ -3,6 +3,7 @@ import { Download, FileCode2, FileText, Image, ChevronDown, ExternalLink } from 
 import { useI18n } from '../../hooks/useI18n.js';
 import { codeLanguages, formatBytes, safeAssetUrl } from '../../utils/blogAssets.js';
 import CodeBlock from './CodeBlock.jsx';
+import DownloadButton from './DownloadButton.jsx';
 
 const PDFViewer = lazy(() => import('./PDFViewer.jsx'));
 const WordPreview = lazy(() => import('./WordPreview.jsx'));
@@ -35,7 +36,7 @@ function Attachment({ file }) {
   if (!url) return null;
   const Icon = file.kind === 'image' ? Image : file.kind === 'code' ? FileCode2 : FileText;
   return <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-white/10 dark:bg-slate-900">
-    <div className="flex items-center gap-3 p-4"><span className="rounded-xl bg-teal-500/10 p-3 text-teal-600 dark:text-teal-300"><Icon size={20} /></span><button type="button" onClick={() => setOpen(v => !v)} aria-expanded={open} className="min-w-0 flex-1 text-left"><span className="block truncate text-sm font-semibold">{file.name}</span><span className="mt-1 block text-xs text-slate-500">{file.kind.toUpperCase()} · {formatBytes(file.size)} · {zh ? '点击预览' : 'Preview'}</span></button><a href={url} download={file.name} target="_blank" rel="noopener noreferrer" className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-white/10" aria-label={`${zh ? '下载' : 'Download'} ${file.name}`}><Download size={18} /></a><button type="button" aria-label={zh ? '展开附件' : 'Toggle preview'} aria-expanded={open} onClick={() => setOpen(v => !v)}><ChevronDown size={18} className={`transition-transform ${open ? 'rotate-180' : ''}`} /></button></div>
+    <div className="flex items-center gap-3 p-4"><span className="rounded-xl bg-teal-500/10 p-3 text-teal-600 dark:text-teal-300"><Icon size={20} /></span><button type="button" onClick={() => setOpen(v => !v)} aria-expanded={open} className="min-w-0 flex-1 text-left"><span className="block truncate text-sm font-semibold">{file.name}</span><span className="mt-1 block text-xs text-slate-500">{file.kind.toUpperCase()} · {formatBytes(file.size)} · {zh ? '点击预览' : 'Preview'}</span></button><DownloadButton file={{ ...file, url }} className="text-slate-500 hover:bg-slate-100 dark:hover:bg-white/10" /><button type="button" aria-label={zh ? '展开附件' : 'Toggle preview'} aria-expanded={open} onClick={() => setOpen(v => !v)}><ChevronDown size={18} className={`transition-transform ${open ? 'rotate-180' : ''}`} /></button></div>
     {open && <div className="border-t border-slate-200 p-3 dark:border-white/10"><Suspense fallback={<p role="status" className="p-6">Loading preview…</p>}>
       {file.kind === 'image' && <a href={url} target="_blank" rel="noopener noreferrer"><img src={url} alt={file.name} className="mx-auto max-h-[650px] rounded-xl object-contain" loading="lazy" /></a>}
       {file.kind === 'pdf' && <PDFViewer key={url} url={url} />}

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Download, Eye, FileStack } from 'lucide-react';
+import { Eye, FileStack } from 'lucide-react';
 import { useI18n } from '../../hooks/useI18n.js';
 import Badge from '../ui/Badge.jsx';
 import FilePreview from './FilePreview.jsx';
+import DownloadButton from './DownloadButton.jsx';
 
 export default function FileList({ files = [] }) {
   const { t, locale } = useI18n();
@@ -52,14 +53,7 @@ export default function FileList({ files = [] }) {
                     {previewFile?.url === file.url ? t('common.close') : t('common.preview')}
                   </button>
                 )}
-                <a
-                  href={file.url}
-                  download
-                  className="inline-flex items-center gap-1 rounded-lg bg-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600"
-                >
-                  <Download size={14} />
-                  {t('common.download')}
-                </a>
+                <DownloadButton file={file} className="bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-300" />
               </div>
             </div>
 
