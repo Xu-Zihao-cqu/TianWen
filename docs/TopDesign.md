@@ -894,3 +894,7 @@ blog_posts 新增 attachments JSONB 与 cover_image；blog-assets 公开桶限�
 ### 2026-10-11 Blog 阅读布局
 
 Blog 列表参考 yayujs.com/blog 的作者侧栏、轻量列表和年份归档结构，使用真实文章年份筛选，不引入虚构分类。保留搜索、封面缩略图、Developer 发布入口及加载/失败/空状态；支持移动端、明暗主题。
+
+### 2026-10-11 下载约定
+
+所有显式附件下载经 DownloadButton 校验，缺失或 SPA HTML 回退进入独立 download-missing.html 彩蛋页。下载次数由 Supabase RPC 原子累加，文件获取成功并触发保存后记录；不记录失败或预览。数据结构与部署见 uploads-setup.md。
