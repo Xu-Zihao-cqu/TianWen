@@ -1,21 +1,20 @@
 import { Helmet } from 'react-helmet-async';
 import { useI18n } from '../hooks/useI18n.js';
 import HeroSection from '../components/features/HeroSection.jsx';
-import AboutSection from '../components/features/AboutSection.jsx';
-import SkillsSection from '../components/features/SkillsSection.jsx';
+import LabSections from '../components/features/LabSections.jsx';
 import FeaturedWorks from '../components/features/FeaturedWorks.jsx';
-import ContactSection from '../components/features/ContactSection.jsx';
 import { defaultSEO } from '../data/seo.js';
 import { profile } from '../data/profile.js';
 import { skills } from '../data/skills.js';
 import { getFeaturedWorks } from '../data/works/index.js';
+import '../styles/observatory.css';
 
 export default function HomePage() {
   const { locale } = useI18n();
   const featuredWorks = getFeaturedWorks();
 
   return (
-    <>
+    <div className="observatory">
       <Helmet>
         <title>{defaultSEO.title}</title>
         <meta name="description" content={defaultSEO.description[locale]} />
@@ -26,9 +25,7 @@ export default function HomePage() {
       </Helmet>
       <HeroSection profile={profile} />
       <FeaturedWorks works={featuredWorks} />
-      <AboutSection bio={profile.bio} />
-      <SkillsSection skills={skills} />
-      <ContactSection contact={profile.contact} />
-    </>
+      <LabSections profile={profile} skills={skills} />
+    </div>
   );
 }

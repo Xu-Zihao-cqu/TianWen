@@ -902,3 +902,6 @@ Blog 列表参考 yayujs.com/blog 的作者侧栏、轻量列表和年份归档�
 ### 2026-10-11 在线作品发布
 
 在既有十三步实现完成后依次扩展 Blog 阅读布局、下载彩蛋、下载统计与作品发布。`/works/new` 为 Developer 创作入口。Supabase works + work-assets 保存线上作品与资源；useWorks 将其合并进原有静态作品，沿用卡片字段、Markdown、文件下载与标签过滤。支持封面/图集、Markdown 导入、附件、实时预览和本机草稿，部署与权限说明见 uploads-setup.md。新增功能分数据服务、编辑器、展示接入、验证文档四小步完成。
+
+### 2026-10-12 Observatory 视觉重构
+首页改为独立的深空观测站主题：石墨黑 + 暖金光环、工程索引作品展示、五方向导航、真实技术栈筛选。共享导航改为细线玻璃栏，阅读与编辑页面继续遵循用户主题。使用独立 observatory.css，避免覆盖业务页卡片。参考 https://bruno-simon.com/ 与 https://brittanychiang.com/ 的交互/层级原则，视觉与代码自行实现。
