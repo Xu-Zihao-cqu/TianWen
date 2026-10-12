@@ -905,3 +905,13 @@ Blog 列表参考 yayujs.com/blog 的作者侧栏、轻量列表和年份归档�
 
 ### 2026-10-12 Observatory 视觉重构
 首页改为独立的深空观测站主题：石墨黑 + 暖金光环、工程索引作品展示、五方向导航、真实技术栈筛选。共享导航改为细线玻璃栏，阅读与编辑页面继续遵循用户主题。使用独立 observatory.css，避免覆盖业务页卡片。参考 https://bruno-simon.com/ 与 https://brittanychiang.com/ 的交互/层级原则，视觉与代码自行实现。
+
+### 2026-10-12 实时黑洞
+
+- Three.js 使用独立动态导入，仅首页需要；ShaderMaterial 在屏幕平面上追踪三维空间中的弯曲光线，叠加旋转噪声吸积盘、遮挡与暖色辉光。这是艺术化近似，不是严格广义相对论模拟。
+- 场景控制提供暂停/播放、观测角度、光环亮度、速度和画质选择；鼠标轻微改变观察角度，触屏保持自然滚动。
+- 移动端、Save-Data、低并发 CPU 的自动模式采用节能配置；像素比上限为 0.85（节能）/1.35（精细），物理渲染宽度上限 1500px，帧率目标为 24/40 FPS，实际速度取决于设备。
+- IntersectionObserver 和 visibilitychange 停止离屏/隐藏页面的绘制；暂停时仅在用户调整参数或尺寸改变时重绘。
+- 路由卸载和画质切换清理 requestAnimationFrame、事件监听、观察器、geometry、material、renderer 和 WebGL 上下文。
+- 系统减少动态效果时不下载 Three.js，直接使用 CSS 黑洞。WebGL 缺失、初始化失败、shader 编译失败、上下文丢失均回退静态场景，不影响作品访问。
+- 无外部纹理、模型、CDN 或新增 Supabase 配置。

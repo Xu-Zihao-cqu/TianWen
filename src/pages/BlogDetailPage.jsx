@@ -30,7 +30,7 @@ export default function BlogDetailPage() {
   const headings = articleHeadings(post?.content);
   const cover = safeAssetUrl(post?.cover_image);
   return <article ref={article} className="relative">
-    <motion.div className="fixed left-0 right-0 top-16 z-40 h-0.5 origin-left bg-teal-400" style={{ scaleX: progress }} />
+    <motion.div className="fixed left-0 right-0 top-[72px] z-40 h-0.5 origin-left bg-teal-400" style={{ scaleX: progress }} />
     <div className="mx-auto max-w-6xl px-5 py-12 md:py-20">
       <Link to="/works/blog" className="inline-flex items-center gap-2 text-sm text-slate-500"><ArrowLeft size={16} />{zh ? '返回手记' : 'Back to journal'}</Link>
       {loading ? <div role="status" className="my-16 h-64 animate-pulse rounded-3xl bg-slate-200 dark:bg-slate-800" aria-label="Loading" /> : error ? <p role="alert" className="mt-10">{zh ? '加载失败，请刷新重试。' : 'Unable to load this post. Please reload.'}</p> : !post ? <h1 className="mt-10 text-3xl">{zh ? '文章不存在' : 'Post not found'}</h1> : <>

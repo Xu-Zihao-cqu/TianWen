@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowDown, Github } from 'lucide-react';
 import { useI18n } from '../../hooks/useI18n.js';
+import BlackHoleScene from './BlackHoleScene.jsx';
 
 export default function HeroSection({ profile }) {
   const { locale } = useI18n();
   const zh = locale === 'zh';
   return <section className="event-horizon" aria-labelledby="horizon-title">
     <div className="observatory-stars" aria-hidden="true" />
-    <div className="singularity-stage" aria-hidden="true"><div className="singularity-fallback"><i /><b /><span /></div></div>
+    <BlackHoleScene />
     <div className="horizon-coordinates" aria-hidden="true"><span>天问 / TIANWEN</span><span>INDEPENDENT EXPLORATIONS — VOL. 01</span></div>
     <div className="lab-container horizon-content">
       <div className="horizon-copy">
